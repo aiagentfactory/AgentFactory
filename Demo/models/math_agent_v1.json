@@ -1,0 +1,8 @@
+{
+  "model_id": "math_agent_v1",
+  "name": "MathAgent_v1",
+  "trained": true,
+  "accuracy": 0.95,
+  "training_dataset": "ds_math_calculations_v1_1764320887.858819",
+  "trained_at": "2025-11-28T17:08:09.861254"
+}

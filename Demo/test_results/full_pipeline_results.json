@@ -1,0 +1,47 @@
+{
+  "timestamp": "2025-11-28T17:08:06.854276",
+  "factories": {
+    "compute": {
+      "status": "success",
+      "allocation_id": "alloc_1764320886.854546",
+      "usage": {
+        "cpu_percent": 29.3,
+        "memory_total_gb": 16.0,
+        "memory_used_gb": 7.75506591796875,
+        "memory_percent": 63.9,
+        "disk_total_gb": 460.4317207336426,
+        "disk_used_gb": 9.425483703613281,
+        "disk_percent": 12.5
+      }
+    },
+    "data": {
+      "status": "success",
+      "dataset_id": "ds_math_calculations_v1_1764320887.858819",
+      "dataset_size": 10,
+      "dataset_file": "/Users/jxrt/Documents/AgentFactory/Demo/data/math_dataset_v1.json"
+    },
+    "environment": {
+      "status": "success",
+      "environment_id": "math_env_v1",
+      "test_cases_count": 5,
+      "env_file": "/Users/jxrt/Documents/AgentFactory/Demo/data/test_environment.json"
+    },
+    "training": {
+      "status": "success",
+      "job_id": "job_1764320887.859709",
+      "model_accuracy": 0.95,
+      "model_file": "/Users/jxrt/Documents/AgentFactory/Demo/models/math_agent_v1.json"
+    },
+    "evaluation": {
+      "status": "success",
+      "verdict": "PASS",
+      "accuracy": 1.0,
+      "eval_file": "/Users/jxrt/Documents/AgentFactory/Demo/test_results/evaluation_report.json"
+    },
+    "runtime": {
+      "status": "success",
+      "deployment_id": "deploy_MathAgent_v1_20251128_170809",
+      "deployment_file": "/Users/jxrt/Documents/AgentFactory/Demo/test_results/deployment_info.json"
+    }
+  }
+}

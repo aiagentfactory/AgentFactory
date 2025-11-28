@@ -1,0 +1,20 @@
+{
+  "sandbox_id": "sandbox-7c1b3763",
+  "agent_id": "agent_002",
+  "template_name": "code-executor",
+  "isolation_level": "container",
+  "created_at": "2025-11-28T17:54:29.570316",
+  "resource_limits": {
+    "cpu_cores": 1.0,
+    "memory_gb": 2.0,
+    "storage_gb": 10.0,
+    "max_processes": 100,
+    "network_bandwidth_mbps": null
+  },
+  "network_config": {
+    "isolated": true,
+    "stable_hostname": "sandbox-7c1b3763.agentfactory.local",
+    "allowed_egress": [],
+    "expose_ports": []
+  }
+}

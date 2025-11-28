@@ -1,0 +1,57 @@
+{
+  "dataset_id": "ds_math_calculations_v1_1764320887.858819",
+  "name": "math_calculations",
+  "version": "v1",
+  "examples": [
+    {
+      "prompt": "What is 5 + 3?",
+      "answer": "8",
+      "quality": 1.0
+    },
+    {
+      "prompt": "Calculate 10 - 4",
+      "answer": "6",
+      "quality": 1.0
+    },
+    {
+      "prompt": "What is 7 * 8?",
+      "answer": "56",
+      "quality": 1.0
+    },
+    {
+      "prompt": "Compute 15 / 3",
+      "answer": "5",
+      "quality": 1.0
+    },
+    {
+      "prompt": "What is 12 + 18?",
+      "answer": "30",
+      "quality": 1.0
+    },
+    {
+      "prompt": "Calculate 25 - 9",
+      "answer": "16",
+      "quality": 1.0
+    },
+    {
+      "prompt": "What is 6 * 7?",
+      "answer": "42",
+      "quality": 1.0
+    },
+    {
+      "prompt": "Compute 20 / 4",
+      "answer": "5",
+      "quality": 1.0
+    },
+    {
+      "prompt": "What is 100 + 50?",
+      "answer": "150",
+      "quality": 1.0
+    },
+    {
+      "prompt": "Calculate 88 - 23",
+      "answer": "65",
+      "quality": 1.0
+    }
+  ]
+}

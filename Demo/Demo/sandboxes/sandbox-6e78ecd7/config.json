@@ -1,0 +1,20 @@
+{
+  "sandbox_id": "sandbox-6e78ecd7",
+  "agent_id": "agent_001",
+  "template_name": "basic-agent",
+  "isolation_level": "process",
+  "created_at": "2025-11-28T17:54:29.569921",
+  "resource_limits": {
+    "cpu_cores": 1.0,
+    "memory_gb": 2.0,
+    "storage_gb": 10.0,
+    "max_processes": 100,
+    "network_bandwidth_mbps": null
+  },
+  "network_config": {
+    "isolated": true,
+    "stable_hostname": "sandbox-6e78ecd7.agentfactory.local",
+    "allowed_egress": [],
+    "expose_ports": []
+  }
+}

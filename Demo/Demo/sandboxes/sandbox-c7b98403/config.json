@@ -1,0 +1,22 @@
+{
+  "sandbox_id": "sandbox-c7b98403",
+  "agent_id": null,
+  "template_name": "basic-agent",
+  "isolation_level": "process",
+  "created_at": "2025-11-28T17:54:31.575141",
+  "resource_limits": {
+    "cpu_cores": 1.0,
+    "memory_gb": 2.0,
+    "storage_gb": 5.0,
+    "max_processes": 50,
+    "network_bandwidth_mbps": null
+  },
+  "network_config": {
+    "isolated": false,
+    "stable_hostname": null,
+    "allowed_egress": [
+      "*"
+    ],
+    "expose_ports": []
+  }
+}

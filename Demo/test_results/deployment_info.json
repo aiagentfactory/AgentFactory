@@ -1,0 +1,21 @@
+{
+  "deployment_id": "deploy_MathAgent_v1_20251128_170809",
+  "model_id": "math_agent_v1",
+  "status": "active",
+  "environment": "production",
+  "deployed_at": "2025-11-28T17:08:09.863632",
+  "inference_examples": [
+    {
+      "prompt": "What is 42 + 28?",
+      "response": "The answer is 70.0"
+    },
+    {
+      "prompt": "Calculate 100 - 37",
+      "response": "The answer is 63.0"
+    },
+    {
+      "prompt": "What is 8 * 9?",
+      "response": "The answer is 72.0"
+    }
+  ]
+}

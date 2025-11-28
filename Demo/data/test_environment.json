@@ -1,0 +1,26 @@
+{
+  "environment_id": "math_env_v1",
+  "type": "math_calculator",
+  "test_cases": [
+    {
+      "prompt": "What is 3 + 7?",
+      "expected": 10
+    },
+    {
+      "prompt": "Calculate 20 - 8",
+      "expected": 12
+    },
+    {
+      "prompt": "What is 9 * 4?",
+      "expected": 36
+    },
+    {
+      "prompt": "Compute 50 / 10",
+      "expected": 5
+    },
+    {
+      "prompt": "What is 15 + 25?",
+      "expected": 40
+    }
+  ]
+}

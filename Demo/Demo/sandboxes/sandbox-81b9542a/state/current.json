@@ -1,0 +1,13 @@
+{
+  "status": "terminating",
+  "last_active": "2025-11-28T17:54:31.576017",
+  "session_context": null,
+  "environment_vars": {
+    "AGENT_TYPE": "basic",
+    "LOG_LEVEL": "INFO"
+  },
+  "installed_tools": [
+    "python3",
+    "pip"
+  ]
+}
