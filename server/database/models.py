@@ -79,3 +79,20 @@ class Agent(Base):
     version = Column(String)
     status = Column(String)
     config = Column(JSON)
+
+class PipelineRun(Base):
+    __tablename__ = "pipeline_runs"
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String)
+    status = Column(String) # 'running', 'completed', 'failed'
+    current_stage = Column(String) # 'training', 'evaluation', 'deployment'
+    config = Column(JSON) # {dataset_id, algo, scenario_id}
+    artifacts = Column(JSON) # {job_id, model_id, eval_id, agent_id}
+    created_at = Column(DateTime, default=datetime.datetime.utcnow)
+
+class PipelineRun(BaseModel): # Oops, SQLAlchemy models should inherit from Base, not Pydantic BaseModel. But wait, the user is asking to ADD it.
+# Let me fix the inheritance in the instruction string.
+    pass
+
+# Correcting the logic:
+# I will write the full class definition for PipelineRun inheriting from Base.

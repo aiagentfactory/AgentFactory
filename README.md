@@ -81,6 +81,11 @@ The platform is divided into 6 integrated modules, each with its own dashboard a
 - **Advantage:** **Human-in-the-Loop Verification.**  Instantly deploy trained models to a chat sandbox. Test edge cases manually and compare agent versions side-by-side before pushing to production.
 - **Capability:** One-click deployment of trained models to inference endpoints with a chat sandbox.
 
+### 🔄 Pipeline Automation
+*The Assembly Line.*
+- **Advantage:** **End-to-End Automation.** Connect the factories into a seamless workflow. Select a dataset, train a model, run safety evaluations, and deploy successful agents automatically without manual intervention.
+- **Capability:** Design and execute multi-stage workflows (Data -> Algo -> Eval -> Deploy).
+
 ---
 
 ## 🚀 Roadmap

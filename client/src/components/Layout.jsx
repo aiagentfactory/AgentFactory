@@ -14,6 +14,7 @@ const Layout = ({ children }) => {
     { path: '/factory/reward', label: 'Reward Factory', icon: <Award size={20} /> },
     { path: '/factory/compute', label: 'Compute Factory', icon: <Server size={20} /> },
     { path: '/factory/runtime', label: 'Runtime Factory', icon: <MessageSquare size={20} /> },
+    { path: '/factory/pipeline', label: 'Pipeline Automation', icon: <LayoutDashboard size={20} /> },
   ];
 
   return (

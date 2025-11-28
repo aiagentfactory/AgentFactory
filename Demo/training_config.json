@@ -1,8 +1,0 @@
-{
-    "model_base": "gpt-2-demo",
-    "algorithm": "sft",
-    "hyperparams": {
-        "epochs": 1,
-        "lr": 0.001
-    }
-}

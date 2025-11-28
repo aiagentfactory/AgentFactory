@@ -1,61 +1,126 @@
-from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.orm import Session
-from ..database import models, database
+"""
+Environment Factory API Router
+Provides environment definition, scenario building, and rollout execution endpoints.
+"""
+
+from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-from typing import Dict, Any, Optional
+from typing import Optional, List, Dict
 
 router = APIRouter(prefix="/env", tags=["Environment Factory"])
 
-class ScenarioCreate(BaseModel):
-    name: str
-    type: str
-    config: Dict[str, Any]
 
-def get_db():
-    db = database.SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+# Mock implementations for MVP
+class CreateScenarioRequest(BaseModel):
+    name: str
+    env_type: str  # "http_api", "browser", "rpa"
+    config: Dict
+
+
+class RunEnvironmentRequest(BaseModel):
+    scenario_id: str
+    agent_id: str
+    max_steps: int = 100
+
 
 @router.post("/scenarios")
-def create_scenario(scenario: ScenarioCreate, db: Session = Depends(get_db)):
-    db_scenario = models.Scenario(name=scenario.name, type=scenario.type, config=scenario.config)
-    db.add(db_scenario)
-    db.commit()
-    db.refresh(db_scenario)
-    return db_scenario
+def create_scenario(request: CreateScenarioRequest):
+    """Create a new environment scenario"""
+    scenario_id = f"scenario_{request.name}_{hash(str(request.config))}"
+    
+    return {
+        "status": "success",
+        "scenario_id": scenario_id,
+        "name": request.name,
+        "env_type": request.env_type
+    }
+
 
 @router.get("/scenarios")
-def list_scenarios(db: Session = Depends(get_db)):
-    return db.query(models.Scenario).all()
+def list_scenarios():
+    """List all scenarios"""
+    # Mock data
+    scenarios = [
+        {
+            "scenario_id": "scenario_customer_support",
+            "name": "Customer Support Simulation",
+            "env_type": "http_api",
+            "created_at": "2024-01-01T00:00:00"
+        },
+        {
+            "scenario_id": "scenario_web_navigation",
+            "name": "Web Navigation Task",
+            "env_type": "browser",
+            "created_at": "2024-01-02T00:00:00"
+        }
+    ]
+    
+    return {
+        "status": "success",
+        "scenarios": scenarios,
+        "count": len(scenarios)
+    }
+ 
 
-@router.post("/runs")
-def start_run(scenario_id: int, db: Session = Depends(get_db)):
-    # Mocking a run start
-    db_run = models.Run(scenario_id=scenario_id, status="running", logs=[])
-    db.add(db_run)
-    db.commit()
-    db.refresh(db_run)
-    return db_run
+@router.post("/run")
+def run_environment(request: RunEnvironmentRequest):
+    """Execute an agent in an environment"""
+    run_id = f"run_{request.scenario_id}_{request.agent_id}"
+    
+    # Mock rollout execution
+    return {
+        "status": "success",
+        "run_id": run_id,
+        "scenario_id": request.scenario_id,
+        "agent_id": request.agent_id,
+        "state": "running"
+    }
 
-@router.post("/runs/{run_id}/step")
-def step_run(run_id: int, action: Dict[str, Any], db: Session = Depends(get_db)):
-    run = db.query(models.Run).filter(models.Run.id == run_id).first()
-    if not run:
-        raise HTTPException(status_code=404, detail="Run not found")
+
+@router.get("/run/{run_id}/trace")
+def get_trace(run_id: str):
+    """Get execution trace for a run"""
+    # Mock trace data
+    trace = {
+        "run_id": run_id,
+        "steps": [
+            {
+                "step": 1,
+                "observation": "Welcome to the environment",
+                "action": "analyze_situation",
+                "reward": 0.1
+            },
+            {
+                "step": 2,
+                "observation": "Situation analyzed",
+                "action": "take_action_1",
+                "reward": 0.5
+            }
+        ],
+        "total_reward": 0.6,
+        "completed": True
+    }
     
-    # Mock logic: If action contains 'finish', complete the run
-    observation = {"obs": f"Processed action: {action}", "status": "ongoing"}
+    return {
+        "status": "success",
+        "trace": trace
+    }
+
+
+@router.get("/run/{run_id}/replay")
+def replay_run(run_id: str):
+    """Get timeline for replay"""
+    timeline = {
+        "run_id": run_id,
+        "timeline": [
+            {"timestamp": "00:00:01", "event": "Environment initialized"},
+            {"timestamp": "00:00:02", "event": "Agent started"},
+            {"timestamp": "00:00:05", "event": "Action executed"},
+            {"timestamp": "00:00:08", "event": "Task completed"}
+        ]
+    }
     
-    if "finish" in str(action).lower():
-         run.status = "completed"
-         observation["status"] = "done"
-    
-    # Update logs (simple append mock)
-    current_logs = list(run.logs) if run.logs else []
-    current_logs.append({"action": action, "observation": observation})
-    run.logs = current_logs
-    
-    db.commit()
-    return observation
+    return {
+        "status": "success",
+        **timeline
+    }

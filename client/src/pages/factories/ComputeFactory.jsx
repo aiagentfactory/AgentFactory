@@ -1,67 +1,91 @@
 import React, { useState, useEffect } from 'react';
-import { Server, Cpu, Activity } from 'lucide-react';
+import { Activity, Cpu, Server, TrendingUp } from 'lucide-react';
+import axios from 'axios';
 
-const ComputeFactory = () => {
-  const [nodes, setNodes] = useState([]);
-  const [newNode, setNewNode] = useState({ name: '', type: 'gpu' });
-
+export default function ComputeFactory() {
+  const [pools, setPools] = useState([]);
+  const [usage, setUsage] = useState(null);
+  
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/compute/nodes').then(r => r.json()).then(setNodes);
+    fetchData();
   }, []);
-
-  const addNode = () => {
-    fetch('http://127.0.0.1:8000/compute/nodes', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(newNode)
-    }).then(r => r.json()).then(n => setNodes([...nodes, n]));
+  
+  const fetchData = async () => {
+    try {
+      const [poolsRes, usageRes] = await Promise.all([
+        axios.get('/api/compute/pools'),
+        axios.get('/api/compute/usage')
+      ]);
+      setPools(poolsRes.data.pools || []);
+      setUsage(usageRes.data.usage || {});
+    } catch (error) {
+      console.error('Failed to fetch compute data:', error);
+    }
   };
-
+  
   return (
-    <div className="page-container">
-      <header className="page-header">
-        <h1>Compute Factory</h1>
-        <p>Manage compute clusters and resources.</p>
-      </header>
-
-      <div className="grid-2">
-          <div className="card">
-              <h3><Server size={18}/> Provision Resource</h3>
-              <div className="form-group">
-                  <label>Node Name</label>
-                  <input type="text" onChange={e => setNewNode({...newNode, name: e.target.value})} />
-              </div>
-              <div className="form-group">
-                  <label>Type</label>
-                  <select onChange={e => setNewNode({...newNode, type: e.target.value})}>
-                      <option value="gpu">GPU Node (H100)</option>
-                      <option value="cpu">CPU Node (x86)</option>
-                  </select>
-              </div>
-              <button className="btn-primary" onClick={addNode}>Provision Node</button>
+    <div className="compute-factory animate-fade-in">
+      <div className="page-header">
+        <h1 className="page-title">⚡ Compute Factory</h1>
+        <p className="page-subtitle">Unified resource scheduling & orchestration</p>
+      </div>
+      
+      {/* Resource Usage */}
+      <div className="grid grid-4">
+        <div className="stat-card">
+          <div className="stat-label">CPU Usage</div>
+          <div className="stat-value">{usage?.cpu_percent?.toFixed(1) || '0'}%</div>
+          <div className="stat-trend">
+            <Cpu size={16} style={{ display: 'inline', marginRight: '4px' }} />
+            {usage?.memory_total_gb?.toFixed(1) || '0'} GB Total
           </div>
-
-          <div className="card">
-              <h3>Cluster Status</h3>
-              <div style={{display: 'flex', flexWrap: 'wrap', gap: '10px'}}>
-                  {nodes.map(n => (
-                      <div key={n.id} style={{
-                          border: '1px solid #e5e7eb', 
-                          padding: '15px', 
-                          borderRadius: '8px',
-                          width: '100px',
-                          textAlign: 'center'
-                      }}>
-                          {n.type === 'gpu' ? <Activity color="#4f46e5"/> : <Cpu color="#10b981"/>}
-                          <div style={{marginTop: '5px', fontWeight: 'bold'}}>{n.name}</div>
-                          <small>{n.status}</small>
-                      </div>
-                  ))}
-              </div>
+        </div>
+        <div className="stat-card">
+          <div className="stat-label">Memory Usage</div>
+          <div className="stat-value">{usage?.memory_percent?.toFixed(1) || '0'}%</div>
+          <div className="stat-trend">
+            {usage?.memory_used_gb?.toFixed(1) || '0'} / {usage?.memory_total_gb?.toFixed(1) || '0'} GB
           </div>
+        </div>
+        <div className="stat-card">
+          <div className="stat-label">Disk Usage</div>
+          <div className="stat-value">{usage?.disk_percent?.toFixed(1) || '0'}%</div>
+          <div className="stat-trend">
+            {usage?.disk_used_gb?.toFixed(1) || '0'} / {usage?.disk_total_gb?.toFixed(1) || '0'} GB
+          </div>
+        </div>
+        <div className="stat-card">
+          <div className="stat-label">Active Jobs</div>
+          <div className="stat-value">5</div>
+         <div className="stat-trend positive">
+            <TrendingUp size={16} style={{ display: 'inline', marginRight: '4px' }} />
+            2 Pending
+          </div>
+        </div>
+      </div>
+      
+      {/* Resource Pools */}
+      <div style={{ marginTop: 'var(--spacing-2xl)' }}>
+        <h2 style={{ marginBottom: 'var(--spacing-lg)', fontSize: '1.5rem' }}>Resource Pools</h2>
+        <div className="grid grid-3">
+          {pools.map((pool, idx) => (
+            <div key={idx} className="card">
+              <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-md)', marginBottom: 'var(--spacing-md)' }}>
+                <Server size={24} />
+                <div>
+                  <h3 style={{ fontSize: '1.1rem' }}>{pool.pool_type}</h3>
+                  <p style={{ fontSize: '0.875rem', color: 'var(--color-text-muted)' }}>
+                    {pool.active_allocations} / {pool.total_resources} used
+                  </p>
+                </div>
+              </div>
+              <div className="progress-bar" style={{ width: '100%', height: '8px', background: 'var(--color-border)', borderRadius: 'var(--radius-sm)', overflow: 'hidden' }}>
+                <div style={{ width: `${(pool.active_allocations / Math.max(pool.total_resources, 1)) * 100}%`, height: '100%', background: 'var(--gradient-primary)' }}></div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
-};
-
-export default ComputeFactory;
+}
