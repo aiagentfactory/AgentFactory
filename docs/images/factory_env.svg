@@ -1,0 +1,48 @@
+<svg width="800" height="500" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="500" fill="#f3f4f6"/>
+  
+  <!-- Sidebar -->
+  <rect width="220" height="500" fill="#111827"/>
+  <text x="20" y="40" font-family="Arial" font-weight="bold" fill="white" font-size="18">Agent Factory v2</text>
+  
+  <text x="45" y="94" font-family="Arial" fill="#9ca3af" font-size="14">Data Factory</text>
+  <rect x="10" y="120" width="200" height="36" rx="5" fill="#4f46e5"/>
+  <text x="45" y="144" font-family="Arial" fill="white" font-size="14">Environment Factory</text>
+  <text x="45" y="184" font-family="Arial" fill="#9ca3af" font-size="14">Algo Factory</text>
+  <text x="45" y="224" font-family="Arial" fill="#9ca3af" font-size="14">Runtime Factory</text>
+
+  <!-- Content -->
+  <text x="260" y="50" font-family="Arial" font-weight="bold" fill="#111827" font-size="24">Environment Factory</text>
+  
+  <!-- Create Scenario Card -->
+  <rect x="260" y="80" width="250" height="280" rx="8" fill="white" stroke="#e5e7eb"/>
+  <text x="280" y="110" font-family="Arial" font-weight="bold" fill="#374151" font-size="14">New Scenario</text>
+  
+  <text x="280" y="140" font-family="Arial" fill="#374151" font-size="12">Scenario Name</text>
+  <rect x="280" y="150" width="210" height="30" rx="4" fill="white" stroke="#d1d5db"/>
+  <text x="290" y="170" font-family="Arial" fill="#111827" font-size="12">Customer Support Sim</text>
+
+  <text x="280" y="200" font-family="Arial" fill="#374151" font-size="12">Type</text>
+  <rect x="280" y="210" width="210" height="30" rx="4" fill="white" stroke="#d1d5db"/>
+  <text x="290" y="230" font-family="Arial" fill="#111827" font-size="12">Text Chat</text>
+
+  <rect x="280" y="260" width="210" height="36" rx="4" fill="#4f46e5"/>
+  <text x="325" y="283" font-family="Arial" font-weight="bold" fill="white" font-size="13">Create Scenario</text>
+
+  <!-- Existing Scenarios List -->
+  <rect x="530" y="80" width="250" height="380" rx="8" fill="white" stroke="#e5e7eb"/>
+  <text x="550" y="110" font-family="Arial" font-weight="bold" fill="#374151" font-size="14">Active Scenarios</text>
+  
+  <rect x="550" y="130" width="210" height="50" rx="4" fill="#f9fafb" stroke="#e5e7eb"/>
+  <text x="560" y="150" font-family="Arial" font-weight="bold" fill="#111827" font-size="12">Trading Bot Sim</text>
+  <text x="560" y="165" font-family="Arial" fill="#6b7280" font-size="10">Type: Browser Automation</text>
+
+  <rect x="550" y="190" width="210" height="50" rx="4" fill="#f9fafb" stroke="#e5e7eb"/>
+  <text x="560" y="210" font-family="Arial" font-weight="bold" fill="#111827" font-size="12">Customer Support</text>
+  <text x="560" y="225" font-family="Arial" fill="#6b7280" font-size="10">Type: Text Chat</text>
+
+  <rect x="550" y="250" width="210" height="50" rx="4" fill="#f9fafb" stroke="#e5e7eb"/>
+  <text x="560" y="270" font-family="Arial" font-weight="bold" fill="#111827" font-size="12">Maze Navigation</text>
+  <text x="560" y="285" font-family="Arial" fill="#6b7280" font-size="10">Type: 2D Grid</text>
+</svg>

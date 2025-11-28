@@ -1,0 +1,54 @@
+<svg width="800" height="500" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="500" fill="#f3f4f6"/>
+  
+  <!-- Sidebar -->
+  <rect width="220" height="500" fill="#111827"/>
+  <text x="20" y="40" font-family="Arial" font-weight="bold" fill="white" font-size="18">Agent Factory v2</text>
+  
+  <text x="45" y="94" font-family="Arial" fill="#9ca3af" font-size="14">Algo Factory</text>
+  <text x="45" y="134" font-family="Arial" fill="#9ca3af" font-size="14">Reward Factory</text>
+  <rect x="10" y="160" width="200" height="36" rx="5" fill="#4f46e5"/>
+  <text x="45" y="184" font-family="Arial" fill="white" font-size="14">Compute Factory</text>
+
+  <!-- Content -->
+  <text x="260" y="50" font-family="Arial" font-weight="bold" fill="#111827" font-size="24">Compute Factory</text>
+  
+  <!-- Provision Card -->
+  <rect x="260" y="80" width="250" height="250" rx="8" fill="white" stroke="#e5e7eb"/>
+  <text x="280" y="110" font-family="Arial" font-weight="bold" fill="#374151" font-size="14">Provision Resource</text>
+  
+  <text x="280" y="140" font-family="Arial" fill="#374151" font-size="12">Node Name</text>
+  <rect x="280" y="150" width="210" height="30" rx="4" fill="white" stroke="#d1d5db"/>
+  <text x="290" y="170" font-family="Arial" fill="#111827" font-size="12">gpu-node-04</text>
+
+  <text x="280" y="200" font-family="Arial" fill="#374151" font-size="12">Type</text>
+  <rect x="280" y="210" width="210" height="30" rx="4" fill="white" stroke="#d1d5db"/>
+  <text x="290" y="230" font-family="Arial" fill="#111827" font-size="12">GPU (H100)</text>
+
+  <rect x="280" y="260" width="210" height="36" rx="4" fill="#4f46e5"/>
+  <text x="325" y="283" font-family="Arial" font-weight="bold" fill="white" font-size="13">Provision Node</text>
+
+  <!-- Cluster Status -->
+  <rect x="530" y="80" width="250" height="380" rx="8" fill="white" stroke="#e5e7eb"/>
+  <text x="550" y="110" font-family="Arial" font-weight="bold" fill="#374151" font-size="14">Cluster Status</text>
+  
+  <!-- Node 1 -->
+  <rect x="550" y="130" width="100" height="100" rx="4" fill="#fff" stroke="#e5e7eb"/>
+  <text x="585" y="160" font-family="Arial" font-weight="bold" fill="#4f46e5" font-size="24">GPU</text>
+  <text x="560" y="190" font-family="Arial" font-weight="bold" fill="#111827" font-size="12">gpu-node-01</text>
+  <text x="575" y="210" font-family="Arial" fill="#10b981" font-size="10">Active</text>
+
+  <!-- Node 2 -->
+  <rect x="660" y="130" width="100" height="100" rx="4" fill="#fff" stroke="#e5e7eb"/>
+  <text x="695" y="160" font-family="Arial" font-weight="bold" fill="#4f46e5" font-size="24">GPU</text>
+  <text x="670" y="190" font-family="Arial" font-weight="bold" fill="#111827" font-size="12">gpu-node-02</text>
+  <text x="685" y="210" font-family="Arial" fill="#10b981" font-size="10">Active</text>
+
+   <!-- Node 3 -->
+   <rect x="550" y="240" width="100" height="100" rx="4" fill="#fff" stroke="#e5e7eb"/>
+   <text x="585" y="270" font-family="Arial" font-weight="bold" fill="#6b7280" font-size="24">CPU</text>
+   <text x="560" y="300" font-family="Arial" font-weight="bold" fill="#111827" font-size="12">cpu-worker-1</text>
+   <text x="575" y="320" font-family="Arial" fill="#f59e0b" font-size="10">Busy</text>
+
+</svg>
