@@ -1,0 +1,14 @@
+INFO:     Will watch for changes in these directories: ['/Users/jxrt/Documents/AgentFactory']
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [88164] using StatReload
+INFO:     Started server process [88169]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:57106 - "GET /data/events HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57108 - "GET /data/datasets HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57110 - "POST /env/scenarios HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57112 - "GET /env/scenarios HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57114 - "GET /algo/models HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57116 - "GET /reward/evaluations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57118 - "GET /compute/nodes HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57120 - "GET /runtime/agents HTTP/1.1" 200 OK

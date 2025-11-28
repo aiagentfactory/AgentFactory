@@ -26,6 +26,10 @@ def create_scenario(scenario: ScenarioCreate, db: Session = Depends(get_db)):
     db.refresh(db_scenario)
     return db_scenario
 
+@router.get("/scenarios")
+def list_scenarios(db: Session = Depends(get_db)):
+    return db.query(models.Scenario).all()
+
 @router.post("/runs")
 def start_run(scenario_id: int, db: Session = Depends(get_db)):
     # Mocking a run start

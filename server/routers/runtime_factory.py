@@ -7,8 +7,8 @@ router = APIRouter(prefix="/runtime", tags=["Runtime Factory"])
 
 class AgentCreate(BaseModel):
     name: str
-    version: str
-    config: dict
+    model_id: str
+    config: dict = {}
 
 class ChatMessage(BaseModel):
     agent_id: int
@@ -24,11 +24,13 @@ def get_db():
 
 @router.post("/agents")
 def deploy_agent(agent: AgentCreate, db: Session = Depends(get_db)):
+    model_id_int = int(agent.model_id) if hasattr(agent, 'model_id') and agent.model_id else None
     db_agent = models.Agent(
         name=agent.name,
-        version=agent.version,
+        version=agent.version if hasattr(agent, 'version') else "1.0",
         status="active",
-        config=agent.config
+        model_id=model_id_int,
+        config=agent.config if hasattr(agent, 'config') else {}
     )
     db.add(db_agent)
     db.commit()

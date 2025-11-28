@@ -11,6 +11,17 @@
 
 ---
 
+## 🏗️ System Architecture
+
+The platform follows a clean, separated architecture ensuring scalability and ease of development:
+*   **Frontend:** A modern React dashboard interacting via REST.
+*   **Backend:** FastAPI serving as the central orchestrator.
+*   **Factories:** 6 Isolated modules handling distinct domain logic.
+
+![System Architecture](docs/images/architecture.svg)
+
+---
+
 ## 🌟 Key Advantages
 
 ### 1. Modular "Factory" Architecture
@@ -25,45 +36,50 @@ Built on standard stacks (FastAPI + React). The codebase is designed for easy ex
 
 ---
 
-## 📸 Factory Tour (Features)
+## 📸 Factory Tour (Features & Advantages)
 
-The platform is divided into 6 integrated modules:
+The platform is divided into 6 integrated modules, each with its own dashboard and specialized capability.
 
 ### 📊 Data Factory
 *Ingest, clean, and version control your datasets.*
-- **Capability:** Real-time event stream monitoring and dataset management.
-- **Use Case:** Ingesting customer support logs or gameplay trajectories for offline RL.
 ![Data Factory](docs/images/factory_data.svg)
+- **Advantage:** **Visual Data Engineering.** Decouple raw data streams from model inputs. Monitor real-time event logs (as shown in the bottom pane) and create snapshots without writing a single SQL query.
+- **Capability:** Real-time event stream monitoring and dataset management.
+
 
 ### 🌍 Environment Factory
 *Define the world your agents live in.*
-- **Capability:** Create text-based, browser-based, or grid-world simulation scenarios.
-- **Use Case:** Setting up a "Sales Call" simulator or a "Web Browsing" sandbox.
 ![Environment Factory](docs/images/factory_env.svg)
+- **Advantage:** **Scenario-Based Simulation.** Stop hardcoding environments. Create reusable scenarios (e.g., "Customer Support Sim" vs "Trading Bot") and switch between text-chat or browser automation modes instantly.
+- **Capability:** Create text-based, browser-based, or grid-world simulation scenarios.
+
 
 ### 🧠 Algorithm Factory
 *The brain of the operation.*
-- **Capability:** Configure training runs, select baselines (SFT, PPO, DQN), and track loss curves.
-- **Use Case:** Fine-tuning Llama-3 on your processed Data Factory datasets.
 ![Algorithm Factory](docs/images/factory_algo.svg)
+- **Advantage:** **One-Click Training.**  Abstracts away complex training loops. Select your dataset, pick an algorithm (SFT/PPO), and watch loss curves update in real-time without needing to SSH into a training cluster.
+- **Capability:** Configure training runs, select baselines (SFT, PPO, DQN), and track loss curves.
+
 
 ### ⚖️ Reward Factory
 *Align agents with human intent.*
-- **Capability:** Define objective functions, run safety evaluations, and manage "Constitutional AI" rules.
-- **Use Case:** Ensuring an agent doesn't hallucinate or output toxic content before deployment.
 ![Reward Factory](docs/images/factory_reward.svg)
+- **Advantage:** **Safety First.**  Dedicated pipeline for "Constitutional AI". Run safety evaluations against defined criteria and get a clear "Pass/Fail" report before any model is allowed to deploy.
+- **Capability:** Define objective functions, run safety evaluations, and manage safety rules.
+
 
 ### 🖥️ Compute Factory
 *Manage the engine room.*
-- **Capability:** Provision and monitor GPU/CPU resources, manage clusters, and view utilization.
-- **Use Case:** Allocating H100 nodes for training vs. CPU nodes for environment rollout generation.
 ![Compute Factory](docs/images/factory_compute.svg)
+- **Advantage:** **Resource Transparency.**  No more guessing if GPU nodes are idle. View cluster health, provision H100s or CPUs on demand, and optimize resource allocation visually.
+- **Capability:** Provision and monitor GPU/CPU resources, manage clusters, and view utilization.
+
 
 ### 💬 Runtime Factory
 *Where agents go to work.*
-- **Capability:** One-click deployment of trained models to inference endpoints with a chat sandbox.
-- **Use Case:** A/B testing two agent versions and manually verifying their responses.
 ![Runtime Factory](docs/images/factory_runtime.svg)
+- **Advantage:** **Human-in-the-Loop Verification.**  Instantly deploy trained models to a chat sandbox. Test edge cases manually and compare agent versions side-by-side before pushing to production.
+- **Capability:** One-click deployment of trained models to inference endpoints with a chat sandbox.
 
 ---
 
