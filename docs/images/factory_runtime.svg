@@ -1,0 +1,34 @@
+<svg width="800" height="500" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="500" fill="#f3f4f6"/>
+  
+  <!-- Sidebar -->
+  <rect width="220" height="500" fill="#111827"/>
+  <text x="20" y="40" font-family="Arial" font-weight="bold" fill="white" font-size="18">Agent Factory v2</text>
+  
+  <text x="45" y="180" font-family="Arial" fill="#9ca3af" font-size="14">Algo Factory</text>
+  <rect x="10" y="200" width="200" height="36" rx="5" fill="#4f46e5"/>
+  <text x="45" y="224" font-family="Arial" fill="white" font-size="14">Runtime Factory</text>
+
+  <!-- Content -->
+  <text x="260" y="50" font-family="Arial" font-weight="bold" fill="#111827" font-size="24">Runtime Factory</text>
+
+  <!-- Deploy -->
+  <rect x="260" y="80" width="240" height="200" rx="8" fill="white" stroke="#e5e7eb"/>
+  <text x="280" y="110" font-family="Arial" font-weight="bold" fill="#374151" font-size="14">Deploy Agent</text>
+  <text x="280" y="135" font-family="Arial" fill="#374151" font-size="12">Select Model</text>
+  <rect x="280" y="145" width="200" height="30" rx="4" fill="white" stroke="#d1d5db"/>
+  <text x="290" y="165" font-family="Arial" fill="#111827" font-size="12">Model_SFT_a1b2c</text>
+  <rect x="280" y="190" width="200" height="36" rx="4" fill="#10b981"/>
+  <text x="340" y="213" font-family="Arial" font-weight="bold" fill="white" font-size="13">Launch</text>
+
+  <!-- Chat -->
+  <rect x="260" y="300" width="520" height="180" rx="8" fill="white" stroke="#e5e7eb"/>
+  <text x="280" y="330" font-family="Arial" font-weight="bold" fill="#374151" font-size="14">Live Chat (SupportBot)</text>
+  
+  <rect x="480" y="350" width="280" height="30" rx="15" fill="#4f46e5"/>
+  <text x="500" y="370" font-family="Arial" fill="white" font-size="12">Hello, can you help me reset my password?</text>
+
+  <rect x="280" y="390" width="280" height="40" rx="15" fill="#f3f4f6"/>
+  <text x="300" y="415" font-family="Arial" fill="#1f2937" font-size="12">Sure, I can help. Please go to settings...</text>
+</svg>

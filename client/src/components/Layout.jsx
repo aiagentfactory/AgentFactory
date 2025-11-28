@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, BrainCircuit, MessageSquare, Database, Settings } from 'lucide-react';
+import { LayoutDashboard, Database, Box, BrainCircuit, Award, Server, MessageSquare } from 'lucide-react';
 import './Layout.css';
 
 const Layout = ({ children }) => {
@@ -8,9 +8,12 @@ const Layout = ({ children }) => {
 
   const navItems = [
     { path: '/', label: 'Dashboard', icon: <LayoutDashboard size={20} /> },
-    { path: '/training', label: 'Training Center', icon: <BrainCircuit size={20} /> },
-    { path: '/data', label: 'Data & Scenarios', icon: <Database size={20} /> },
-    { path: '/playground', label: 'Agent Playground', icon: <MessageSquare size={20} /> },
+    { path: '/factory/data', label: 'Data Factory', icon: <Database size={20} /> },
+    { path: '/factory/env', label: 'Environment Factory', icon: <Box size={20} /> },
+    { path: '/factory/algo', label: 'Algorithm Factory', icon: <BrainCircuit size={20} /> },
+    { path: '/factory/reward', label: 'Reward Factory', icon: <Award size={20} /> },
+    { path: '/factory/compute', label: 'Compute Factory', icon: <Server size={20} /> },
+    { path: '/factory/runtime', label: 'Runtime Factory', icon: <MessageSquare size={20} /> },
   ];
 
   return (
@@ -18,7 +21,7 @@ const Layout = ({ children }) => {
       <aside className="sidebar">
         <div className="brand">
           <h2>Agent Factory</h2>
-          <span className="version">v1.0</span>
+          <span className="version">v2.0</span>
         </div>
         <nav>
           {navItems.map((item) => (

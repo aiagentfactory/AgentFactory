@@ -5,10 +5,9 @@ from pydantic import BaseModel
 
 router = APIRouter(prefix="/runtime", tags=["Runtime Factory"])
 
-class AgentCreate(BaseModel):
+class DeployRequest(BaseModel):
     name: str
-    version: str
-    config: dict
+    model_id: int
 
 class ChatMessage(BaseModel):
     agent_id: int
@@ -23,12 +22,18 @@ def get_db():
         db.close()
 
 @router.post("/agents")
-def deploy_agent(agent: AgentCreate, db: Session = Depends(get_db)):
+def deploy_agent(req: DeployRequest, db: Session = Depends(get_db)):
+    # Check if model exists
+    model = db.query(models.ModelArtifact).filter(models.ModelArtifact.id == req.model_id).first()
+    if not model:
+        raise HTTPException(status_code=404, detail="Model not found")
+        
     db_agent = models.Agent(
-        name=agent.name,
-        version=agent.version,
+        name=req.name,
+        model_id=req.model_id,
         status="active",
-        config=agent.config
+        endpoint=f"/runtime/chat",
+        config={"deployed_at": "now"}
     )
     db.add(db_agent)
     db.commit()
@@ -45,10 +50,12 @@ def chat_with_agent(chat: ChatMessage, db: Session = Depends(get_db)):
     if not agent:
         raise HTTPException(status_code=404, detail="Agent not found")
     
-    # Mock Agent Response
-    response_text = f"I am Agent {agent.name} (v{agent.version}). I received: {chat.message}"
+    model = db.query(models.ModelArtifact).filter(models.ModelArtifact.id == agent.model_id).first()
+    model_name = model.name if model else "Unknown"
+
+    response_text = f"[{agent.name} using {model_name}]: I processed '{chat.message}'."
     
-    # Log event automatically to Data Factory (simulated internal call)
+    # Log event
     db_event = models.Event(
         event_type="chat_turn",
         content={"input": chat.message, "output": response_text, "agent_id": agent.id},

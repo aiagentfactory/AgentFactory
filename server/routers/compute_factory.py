@@ -1,24 +1,35 @@
 from fastapi import APIRouter, Depends
+from sqlalchemy.orm import Session
+from ..database import models, database
 from pydantic import BaseModel
 
 router = APIRouter(prefix="/compute", tags=["Compute Factory"])
 
-class ResourceRequest(BaseModel):
-    gpu_type: str
-    count: int
+class NodeCreate(BaseModel):
+    name: str
+    type: str # gpu, cpu
 
-@router.post("/allocate")
-def allocate_resources(req: ResourceRequest):
-    return {
-        "status": "allocated",
-        "resource_id": "res-12345",
-        "details": f"Allocated {req.count} x {req.gpu_type}"
-    }
+def get_db():
+    db = database.SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
-@router.get("/usage")
-def get_usage():
-    return {
-        "gpu_util": "45%",
-        "memory_util": "60%",
-        "active_nodes": 3
-    }
+@router.get("/nodes")
+def list_nodes(db: Session = Depends(get_db)):
+    return db.query(models.ComputeNode).all()
+
+@router.post("/nodes")
+def add_node(node: NodeCreate, db: Session = Depends(get_db)):
+    specs = {"vram": "24GB"} if node.type == "gpu" else {"cores": 16}
+    db_node = models.ComputeNode(
+        name=node.name,
+        type=node.type,
+        status="idle",
+        specs=specs
+    )
+    db.add(db_node)
+    db.commit()
+    db.refresh(db_node)
+    return db_node
