@@ -1,0 +1,534 @@
+《Agent Factory – 完整产品需求文档（PRD）v1.0》
+文档目标
+
+提供一个从 0 → 1 搭建 企业级 Agent 训练与部署工厂 的完整产品规格，供工程团队（或 Claude Opus 4.5）直接生成代码与系统。
+
+📌 一、产品愿景（Vision）
+
+Agent Factory = 一套生产级的 Agent 训练、评估、部署全链路工厂。
+
+面向两类用户：
+
+Agent 研发者（训练、实验、算法）
+
+Agent 业务团队（运营、部署、可视化、监控）
+
+最终目标：
+
+让 Agent 能自动收集数据 → 训练策略 → 评估 → 部署 → 运行，形成闭环。
+
+支持 SFT、RFT、RL、Tool-Use Agents、MCP Plugins、自动评估、对齐、安全审计。
+
+完全具备前后端分离、微服务化、可扩展、可观察、安全合规的企业级能力。
+
+📌 二、总体系统架构（System Architecture）
+
+系统由 6 个工厂组成：
+
+┌────────────────────────────────────┐
+│             Runtime Factory        │
+│      (Agent Delivery & Serving)    │
+└──────────────▲─────────────────────┘
+               │ Actions / Queries
+               │
+┌──────────────┴─────────────────────┐
+│        Reward/Eval Factory          │
+│   (Reward Model + Verifier + Eval)  │
+└──────────────▲─────────────────────┘
+               │ Scores / Labels
+               │
+┌──────────────┴─────────────────────┐
+│        Algorithm Factory            │
+│   (SFT / RFT / PPO / DPO Training)  │
+└──────────────▲─────────────────────┘
+               │ Rollouts / Datasets
+               │
+┌──────────────┴─────────────────────┐
+│        Environment Factory          │
+│  (Scenarios / API / Sandbox / VM)   │
+└──────────────▲─────────────────────┘
+               │ Trajectories / Logs
+               │
+┌──────────────┴─────────────────────┐
+│        Data Factory                 │
+│(Events / Datasets / Label Platform) │
+└──────────────▲─────────────────────┘
+               │ Training Data
+               │
+       ┌───────┴────────┐
+       │ Compute Factory │
+       │ (GPU/CPU/Cost) │
+       └────────────────┘
+
+📌 三、核心子工厂 PRD（逐个详细）
+1️⃣ Data Factory – 数据工厂 PRD
+📍 1.1 目的
+
+构建一个统一的数据采集、清洗、标注、版本管理与数据集生成中心。
+
+📍 1.2 输出产物
+
+Events / Trajectories
+
+Human Feedback（偏好数据）
+
+Reward Labels
+
+SFT/RFT/ReplayBuffer-ready datasets
+
+Data lineage & metadata
+
+Labeling tasks + UI
+
+📍 1.3 功能需求（FR）
+FR1. 事件采集
+
+API：POST /events
+支持内容：
+
+agent_action
+
+environment_observation
+
+tool_call
+
+reward signals
+
+metadata (session_id, env_id, ts)
+
+FR2. 数据处理
+
+要求：
+
+schema enforcement
+
+自动脱敏 PII
+
+去重、质量检查
+
+FR3. 标注系统（Human-in-the-loop）
+
+Pairwise ranking
+
+Scalar Reward labeling
+
+Tool-correctness labeling
+
+批量任务生成
+
+FR4. 数据集生成
+
+API：
+
+POST /datasets/create
+参数：
+
+filters（tags, timestamps, agent_version）
+
+output_format = parquet/jsonl
+
+FR5. 数据血缘（lineage）
+
+记录：
+
+来自哪个环境 run
+
+来自哪个 agent version
+
+哪个 labeler 处理
+
+数据是否被训练使用
+
+2️⃣ Environment Factory – 环境工厂 PRD
+📍 2.1 目的
+
+创建可复现、可安全隔离的环境（浏览器、API、robot simulator）。
+
+📍 2.2 输出产物
+
+Sandbox VM/Container runtime
+
+Task scenario specs
+
+Observation / Action schema
+
+Step-by-step trajectories
+
+Deterministic replay
+
+📍 2.3 功能需求（FR）
+FR1. 场景管理
+
+API：POST /scenarios
+字段：
+
+name
+
+type (browser/api/text/robot)
+
+initial state
+
+checker logic（Python or YAML）
+
+FR2. 环境执行
+
+API：POST /runs
+返回 run_id
+支持执行：
+
+step(action) → observation
+
+auto-termination
+
+safe execution (timeouts, quotas)
+
+FR3. 浏览器环境（可选）
+
+Playwright-based
+
+DOM observation
+
+Tool-calls interception
+
+FR4. 回放能力
+
+API:
+GET /runs/{id}/trace
+
+3️⃣ Algorithm Factory – 算法工厂 PRD
+📍 3.1 目的
+
+对 Agent 进行训练，提高策略质量。
+
+📍 3.2 输出产物
+
+SFT 模型
+
+RFT 模型
+
+PPO / DPO / RLAIF 模型
+
+Checkpoints
+
+Experiment metadata
+
+📍 3.3 功能需求（FR）
+FR1. 训练任务创建
+
+API：POST /train/jobs
+参数：
+
+model_base
+
+dataset_ref
+
+algorithm (sft / rft / ppo / dpo)
+
+hyperparams
+
+compute_requirements
+
+FR2. 实验追踪
+
+loss
+
+KL
+
+reward curve
+
+eval metrics
+
+compute cost
+
+FR3. 模型管理
+
+API：
+
+GET /models/{id}
+
+POST /models/{id}/promote
+
+4️⃣ Reward Factory – 奖励工厂 PRD
+📍 4.1 目的
+
+定义并评估每个任务的好坏标准，产出 reward signal。
+
+📍 4.2 输出产物
+
+Reward Model
+
+Verifiers
+
+Eval reports
+
+Safety & bias audit
+
+📍 4.3 功能需求（FR）
+FR1. Reward Model 训练
+
+输入：pairwise preference 数据
+输出：RM checkpoint
+
+FR2. Auto-Eval
+
+API：POST /eval/run
+
+Pass/Fail
+
+Score
+
+Safety Check
+
+Task Metric（success rate）
+
+FR3. Verifier
+
+实现：
+
+rule-based checker
+
+LLM judge checker
+
+hybrid scoring
+
+5️⃣ Compute Factory – 计算工厂 PRD
+📍 5.1 目的
+
+训练、推理、环境执行的 GPU/CPU 统一调度。
+
+📍 5.2 输出产物
+
+Resource pool
+
+Job scheduler
+
+Autoscaler
+
+Cost dashboard
+
+📍 5.3 功能需求（FR）
+FR1. 资源申请
+
+API：POST /compute/allocate
+字段：gpu_type, count, duration, priority
+
+FR2. Autoscaling
+
+detect backlog
+
+optimize cost
+
+scale env workers / training nodes
+
+FR3. 节点监控
+
+GPU util
+
+CPU / Memory
+
+Spot preemptions
+
+6️⃣ Runtime & Delivery Factory – 运行工厂 PRD
+📍 6.1 目的
+
+将训练好的模型变成可用的 Agent 服务。
+
+📍 6.2 输出产物
+
+Agent Runtime
+
+Sessions
+
+Agent Plugin Configs
+
+Deployed versions
+
+Monitoring dashboards
+
+📍 6.3 功能需求（FR）
+FR1. 调用 Agent
+
+API：
+
+POST /agents/{id}/sessions
+
+POST /agents/{id}/sessions/{sid}/step
+
+FR2. 工具（MCP Plugins）管理
+
+register plugin
+
+permissions
+
+scopes
+
+versioning
+
+FR3. 监控
+
+latency
+
+error rate
+
+tool success
+
+memory
+
+safety violations
+
+📌 四、系统 API 边界（对 Claude 和工程团队最重要）
+
+以下为顶层 API Schema（每个微服务可以由 Claude 自动代码生成）
+
+🔹 Data Factory
+POST /events
+GET /datasets/{id}
+POST /datasets/create
+POST /label-tasks
+
+🔹 Environment Factory
+POST /scenarios
+POST /runs
+POST /runs/{id}/step
+GET  /runs/{id}/trace
+
+🔹 Algorithm Factory
+POST /train/jobs
+GET  /train/jobs/{id}
+POST /train/jobs/{id}/stop
+GET  /models/{id}/checkpoints
+POST /models/{id}/promote
+
+🔹 Reward Factory
+POST /eval/run
+GET  /eval/{id}/results
+POST /rm/train
+GET  /rm/models
+
+🔹 Compute Factory
+POST /compute/allocate
+GET  /compute/usage
+POST /compute/scale
+
+🔹 Runtime Factory
+POST /agents
+POST /agents/{id}/sessions
+POST /agents/{id}/sessions/{sid}/step
+GET  /agents/{id}/sessions/{sid}/history
+
+📌 五、前后端分工
+前端（React + Tailwind + Vite）
+
+场景编排器（Scenario Builder）
+
+Run 回放 Viewer（Step trace visualization）
+
+数据与标注平台
+
+训练控制台
+
+Reward/Eval Dashboard
+
+Agent 管理面板（版本、插件、监控）
+
+多租户管理与权限管理 UI
+
+后端（微服务）
+
+Microservices（建议 12 个）：
+
+data-ingest
+
+dataset-store
+
+labeling-service
+
+env-runner
+
+browser-runner (optional)
+
+agent-runtime
+
+tool-gateway
+
+train-orchestrator
+
+rollout-worker
+
+eval-engine
+
+rm-trainer
+
+compute-scheduler
+
+model-registry
+
+架构：Kafka + Kubernetes + S3 + vLLM
+
+📌 六、非功能性需求（NFR）
+分类	要求
+性能	agent 推理 < 1s；环境 step < 300ms
+可用性	99.9% uptime
+扩展性	每分钟 > 10k events ingest
+数据安全	所有数据 PII 自动脱敏
+可观测	完整 logs + metrics + traces
+多租户	Tenant 隔离，RBAC，权限分级
+合规	GDPR、数据可删除、审计日志 1 年保留
+📌 七、MVP 交付清单（工程团队可直接执行）
+4 周版本（最小可运行 Agent 工厂）
+Week 1
+
+Data Factory（events ingest + dataset store）
+
+Environment Factory（基本 scenario + runs）
+
+Week 2
+
+Algorithm Factory（SFT pipeline）
+
+Compute Factory（最小调度器）
+
+Week 3
+
+Runtime Factory（agent session）
+
+前端 Dashboard（runs + events explorer）
+
+Week 4
+
+Eval Factory（rule-based evaluator）
+
+MVP 集成 + end-to-end pipeline
+
+最终产物：
+✔️ 一个可运行的“训练 → 环境 → 数据 → 部署”闭环。
+
+📌 八、验收标准（Acceptance Criteria）
+
+✓ 可以创建一个 scenario
+
+✓ agent 能在环境中执行任务并产生 trajectory
+
+✓ events 被写入 Data Factory
+
+✓ 训练作业成功运行并生成 checkpoint
+
+✓ Reward/Eval 能给出成功率
+
+✓ agent 能被部署并被用户调用
+
+✓ 整套流程可在一键 E2E 测试中跑通
+
+📌 九、术语表 Glossary
+
+Trajectory：agent 的 observation-action 序列
+
+Scenario：环境任务定义
+
+Run：环境的一次执行
+
+RM：Reward Model
+
+RFT：Reinforcement Fine-tuning
+
+MCP：Model Context Protocol（插件工具）

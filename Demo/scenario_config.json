@@ -1,0 +1,8 @@
+{
+    "name": "Demo_CustomerSupport_v1",
+    "type": "text",
+    "config": {
+        "system_prompt": "You are a helpful assistant.",
+        "max_turns": 10
+    }
+}
